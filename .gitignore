@@ -1,0 +1,10 @@
+# Default ignored files
+*.xml
+*.zip
+*.png
+*.jpg
+
+.idea/
+venv/
+
+filemover.py
