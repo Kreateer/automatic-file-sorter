@@ -2,6 +2,7 @@
 
 - This is a small program that automatically moves and sorts files from chosen source to destination. It uses [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI) to create a minimal GUI for the user.
 - Anyone is welcome to work on it and add whatever features they wish, as long as they adhere to the [Code of Conduct](https://github.com/Kreateer/automatic-file-sorter/blob/master/CODE_OF_CONDUCT.md) and the [Contributing Guidelines](https://github.com/Kreateer/automatic-file-sorter/blob/master/CONTRIBUTING.md).
+This is especially interesting for Python beginners who don't have a project idea, but would like to work on something.
 
 ## Never Contributed Before?
 
