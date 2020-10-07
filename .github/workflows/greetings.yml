@@ -1,6 +1,6 @@
 name: Greetings
 
-on: [issues]
+on: [pull_request_target, issues]
 
 jobs:
   greeting:
@@ -10,3 +10,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: 'Hi! Thank you for your interest in contributing to this project! If you haven't already, please check the [Contributing Guidelines](https://github.com/Kreateer/automatic-file-sorter/blob/master/CONTRIBUTING.md) before working on the issue!'
+        pr-message: 'Congratulations for making your first PR at [Automatic File Sorter](https://github.com/Kreateer/automatic-file-sorter)! Your contribution will be reviewed soon.'
