@@ -2,7 +2,18 @@
 
 - This is a small program that automatically moves and sorts files from chosen source to destination. It uses [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI) to create a minimal GUI for the user.
 - Anyone is welcome to work on it and add whatever features they wish, as long as they adhere to the [Code of Conduct](https://github.com/Kreateer/automatic-file-sorter/blob/master/CODE_OF_CONDUCT.md) and the [Contributing Guidelines](https://github.com/Kreateer/automatic-file-sorter/blob/master/CONTRIBUTING.md).
-- This project is especially interesting for Python beginners who don't have a project idea, but would like to work on something or anyone participating in the annual Hacktoberfest and looking to contribute to a project.
+- This project is especially interesting **for Python beginners** who don't have a project idea, but would like to work on something or anyone participating in the annual **Hacktoberfest** and looking to contribute to a project.
+
+## Project Goal(s)
+
+This project aims to create a small, user-friendly tool to help people with organizing their files through use of simple algorithms that provide a number of sorting options.
+
+Specifically, this project looks to provide the user with:
+
+- A program that automatically moves/copies and sorts files from user-designated source to destination directory
+- A user-friendly interface for managing files
+- The option to automatically move/copy and sort files from removable devices
+- The option to automatically sort directories or partitions as content is added, changed or removed
 
 ## Never Contributed Before?
 
