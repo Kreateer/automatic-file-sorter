@@ -3,10 +3,14 @@
 *.zip
 *.png
 *.jpg
+*.pyc
 
 .idea/
 venv/
+test_folder/
+test_folder_2/
+test_scripts/
 
 filemover.py
-
 fmguicopy.py
+fmguicopy2.py
