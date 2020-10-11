@@ -3,12 +3,10 @@
 *.zip
 *.png
 *.jpg
+*.pyc
 
 .idea/
 venv/
+test/
 test_folder/
 test_folder_2/
-
-filemover.py
-
-fmguicopy.py
