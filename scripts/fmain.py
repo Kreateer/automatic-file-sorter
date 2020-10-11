@@ -27,6 +27,8 @@ class fmGUI():
 
     def main_window(self):
         layout = [
+            [sg.Text("Choose Operation to perform:")],
+            [sg.Combo(['Copy', 'Move'], key='OPERATION')],
             [sg.Text("Choose filetype:")],
             [sg.Combo(['.zip', '.png'], key='FILETYPE', enable_events=True)],
             [sg.Ok(), sg.Cancel()]
@@ -41,7 +43,7 @@ class fmGUI():
                 if values['FILETYPE'] not in file_type:
                     file_type.append(values['FILETYPE'])
                     run_fmover = FileMover(no_sort=False)
-                    run_fmover.filemover()
+                    run_fmover.filemover(values['OPERATION'])
         window.close()
 
 
@@ -52,7 +54,7 @@ class FileMover():
     #    self.sort3 = sortoption3
         self.no_sort = False
 
-    def filemover(self):
+    def filemover(self, mode):
         while True:
             self.no_sort = True
             num_files = len(os.listdir(get_path('src')))
@@ -63,7 +65,11 @@ class FileMover():
                 for file in os.listdir(get_path('src')):
                     file_ending = str(file_type)[2:-2]
                     if file.endswith(file_ending):
-                        result = shutil.move(get_path('src') + "/" + file, get_path('dst') + "/" + file)
+                        result = None
+                        if mode == "Copy":
+                            result = shutil.copy(get_path('src') + "/" + file, get_path('dst') + "/" + file)
+                        else:
+                            result = shutil.move(get_path('src') + "/" + file, get_path('dst') + "/" + file)
                         print(file)
                         is_file_in_curr_dir = os.path.isfile(get_path('dst') + "/" + file)
                         current_dir = os.listdir(get_path('dst'))
