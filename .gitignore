@@ -8,5 +8,7 @@
 .idea/
 venv/
 test/
-test_folder/
-test_folder_2/
+
+filemover.py
+fmguicopy.py
+fmguicopy2.py
