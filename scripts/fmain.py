@@ -1,15 +1,14 @@
 import os
 import shutil
 import PySimpleGUI as sg
-#from scripts import fmsort
-
-#sortby = fmsort.SortCriteria()
 
 source_folder = sg.popup_get_folder('Choose source location:', default_path='')
 destination_folder = sg.popup_get_folder('Choose destination folder:', default_path='')
 
-#folders = {source_folder: destination_folder}
 file_type = []
+mode_list = []
+sort_list = []
+
 
 def get_path(src_or_dst):
     folders = {source_folder: destination_folder}
@@ -23,16 +22,21 @@ def get_path(src_or_dst):
         raise SystemError("Parameter has to be 'src' or 'dst'")
 
 
-class fmGUI():
+class fmGUI:
 
     def main_window(self):
         layout = [
             [sg.Text("Choose Operation to perform:")],
-            [sg.Combo(['Copy', 'Move'], key='OPERATION')],
+            [sg.Combo(['Copy', 'Move'], default_value='Move' ,key='OPERATION')],
+            [sg.Frame(layout=[
+                [sg.Text("Sort by Type")],
+                [sg.Radio("Enabled", "RADIO1", default=False, key='SBYTE', enable_events=True),
+                 sg.Radio("Disabled", "RADIO1", default=True, key='SBYTD', enable_events=True)]
+                 ], title='Sorting Options', title_color='red', relief=sg.RELIEF_SUNKEN)],
             [sg.Text("Choose filetype:")],
-            [sg.Combo(['.zip', '.png'], key='FILETYPE', enable_events=True)],
-            [sg.Ok(), sg.Cancel()]
-        ]
+            [sg.Combo(['.zip', '.png', '.txt', '.md'], key='FILETYPE', enable_events=True)],
+            [sg.Ok(), sg.Cancel()]]
+
         window = sg.Window('Choose filetype to move', layout, default_element_size=(40, 1))
 
         while True:
@@ -41,42 +45,203 @@ class fmGUI():
                 break
             elif event in 'Ok':
                 if values['FILETYPE'] not in file_type:
-                    file_type.append(values['FILETYPE'])
-                    run_fmover = FileMover(no_sort=False)
-                    run_fmover.filemover(values['OPERATION'])
+                    append_file_type(values['FILETYPE'])
+                    run_fmover = FileMover()
+                    append_mode(values['OPERATION'])
+                    if len(sort_list) == 1:
+                        for value in sort_list:
+                            if value == 'Sort by Type':
+                                run_fmover.filemover(values['OPERATION'], value)
+                            else:
+                                run_fmover.filemover(values['OPERATION'], None)
+                    else:
+                        run_fmover.filemover(values['OPERATION'], None)
+
+                else:
+                    run_fmover = FileMover()
+                    append_mode(values['OPERATION'])
+                    if len(sort_list) == 1:
+                        for value in sort_list:
+                            if value == 'Sort by Type':
+                                run_fmover.filemover(values['OPERATION'], value)
+                            else:
+                                run_fmover.filemover(values['OPERATION'], None)
+                    else:
+                        run_fmover.filemover(values['OPERATION'], None)
+
+            elif event in 'SBYTE':
+                if values['SBYTE'] is True:
+                    sort_list.append('Sort by Type')
+                else:
+                    pass
+
+            elif event in 'SBYTD':
+                if values['SBYTD'] is True:
+                    sort_list.clear()
+                else:
+                    pass
+            else:
+                pass
+
         window.close()
 
 
-class FileMover():
-    def __init__(self, no_sort):
-    #    self.sort1 = sortoption1
-    #    self.sort2 = sortoption2
-    #    self.sort3 = sortoption3
-        self.no_sort = False
+def append_mode(mode):
+    mode_list.append(mode)
+    if mode in mode_list:
+        return mode
 
-    def filemover(self, mode):
+
+def detect_mode():
+    return mode_list[0]
+
+
+def append_file_type(value):
+    file_type.append(value)
+    return value
+
+
+def get_file_type():
+    if len(file_type) == 1:
+        return str(file_type)[2:-2]
+    else:
+        ft_copy = file_type.copy()
+        file_type.clear()
+        ft_copy.pop(0)
+        file_type.append(str(ft_copy)[2:-2])
+        return str(file_type)[2:-2]
+
+
+class FileMover():
+
+    def filemover(self, operation, sortby):
         while True:
-            self.no_sort = True
             num_files = len(os.listdir(get_path('src')))
             if num_files == 0:
                 sg.PopupError("No files in folder!")
                 raise SystemExit()
-            elif self.no_sort:
+            elif sortby is None:
                 for file in os.listdir(get_path('src')):
-                    file_ending = str(file_type)[2:-2]
+                    file_ending = get_file_type()
+                    is_file_in_curr_dir = os.path.isfile(get_path('dst') + "/" + file)
                     if file.endswith(file_ending):
                         result = None
-                        if mode == "Copy":
-                            result = shutil.copy(get_path('src') + "/" + file, get_path('dst') + "/" + file)
+                        if is_file_in_curr_dir is False:
+                            if operation == "Copy":
+                                result = shutil.copy(get_path('src') + "/" + file, get_path('dst') + "/" + file)
+                            else:
+                                result = shutil.move(get_path('src') + "/" + file, get_path('dst') + "/" + file)
+                        #if file not in current_dir:
+                        #    file_type.pop()
+
+            elif sortby == 'Sort by Type':
+                for file in os.listdir(get_path('src')):
+                    sc = SortCriteria()
+                    file_ending = get_file_type()
+                    is_file_in_dst_dir = os.path.isfile(get_path('dst') + "/" + file)
+                    get_subdir()
+                    #is_file_in_subdir = os.path.isfile(get_subdir()) + "/" + file
+                    if file.endswith(file_ending):
+                        if is_file_in_dst_dir is False and get_subdir() is False:
+                            result = None
+                            if operation == "Copy":
+                                result = shutil.copy(get_path('src') + "/" + file, sc.sortbytype(file_ending) + "/" + file)
+                            else:
+                                result = shutil.move(get_path('src') + "/" + file, sc.sortbytype(file_ending) + "/" + file)
+                        elif is_file_in_dst_dir is False and get_subdir() is True:
+                            result = None
+                            if operation == 'Copy':
+                                result = shutil.copy(get_path('src') + "/" + file, sc.sortbytype(file_ending) + "/" + file)
+                            else:
+                                result = shutil.move(get_path('src') + "/" + file, sc.sortbytype(file_ending) + "/" + file)
                         else:
-                            result = shutil.move(get_path('src') + "/" + file, get_path('dst') + "/" + file)
-                        print(file)
-                        is_file_in_curr_dir = os.path.isfile(get_path('dst') + "/" + file)
-                        current_dir = os.listdir(get_path('dst'))
-                        if file not in current_dir:
-                            print(file_type)
-                            file_type.pop()
+                            pass
+
             return sg.PopupOK(f"File transfer successful!\nFile(s) moved to '{get_path('dst')}'")
+
+
+fmover = FileMover()
+
+source = get_path('src')
+destination = get_path('dst')
+
+
+def get_subdir():
+    if os.path.exists(str(destination) + '/' + 'Images'):
+        return True
+
+    elif os.path.exists(str(destination) + '/' + 'Archives'):
+        return True
+
+    elif os.path.exists(str(destination) + '/' + 'Text Files'):
+        return True
+
+    else:
+        return False
+
+
+
+class SortCriteria():
+
+    def sortbytype(self, ftype):
+        type_list = [ftype]
+        image_list = ['.png', '.jpg', '.jpeg', '.gif']
+        archive_list = ['.zip', '.rar', '.7z']
+        textf_list = ['.txt', '.md']
+
+        # For image files
+        for type in type_list:
+            if type in image_list: #'.png' or '.jpg' or '.jpeg' or '.gif':
+                if os.path.exists(str(destination) + '/' + 'Images'):
+                    return str(os.path.join(str(destination) + '/' + 'Images'))
+                else:
+                    os.mkdir(str(destination) + '/' + 'Images')
+                    return str(os.path.join(str(destination) + '/' + 'Images'))
+
+        # For archive files
+            elif type in archive_list:
+                if os.path.exists(str(destination) + '/' + 'Archives'):
+                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+                else:
+                    os.mkdir(str(destination) + '/' + 'Archives')
+                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+
+        # For text files
+            elif type in textf_list:
+                    if os.path.exists(str(destination) + '/' + 'Text Files'):
+                        return str(os.path.join(str(destination) + '/' + 'Text Files'))
+                    else:
+                        os.mkdir(str(destination) + '/' + 'Text Files')
+                        return str(os.path.join(str(destination) + '/' + 'Text Files'))
+
+            else:
+                sg.PopupError("File type not found!")
+                raise SystemExit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 main_gui = fmGUI()
