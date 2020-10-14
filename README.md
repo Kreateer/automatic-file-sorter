@@ -25,6 +25,23 @@ Specifically, this project looks to provide the user with:
 - The option to automatically move/copy and sort files from removable devices
 - The option to automatically sort directories or partitions as content is added, changed or removed
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Kreateer"><img src="https://avatars2.githubusercontent.com/u/19147258?v=4" width="100px;" alt=""/><br /><sub><b>Matija Milaković</b></sub></a><br /><a href="#projectManagement-Kreateer" title="Project Management">📆</a><a href="#ideas-Kreateer" title="Ideas, Planning, & Feedback">🤔</a><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Code">💻</a> <a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Documentation">📖</a></td>
+     <td align="center"><a href="https://github.com/pushp1997"><img src="https://avatars2.githubusercontent.com/u/19623154?s=400&u=7a94be1ab36f881e6b2c2322ccc9e5f63082a28f&v=4" width="100px;" alt=""/><br /><sub><b>Pushp Vashisht</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=pushp1997" title="Code">💻</a>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+
 ## How to Contribute? ✍️
 
 - First, refer to the [Contributing Guidelines](https://github.com/Kreateer/automatic-file-sorter/blob/master/CONTRIBUTING.md)
