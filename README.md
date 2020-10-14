@@ -1,4 +1,14 @@
-# Automatic File Sorter 🗃️
+<h1 align=center> Automatic File Sorter 🗃️ </h1>
+
+<h3 align=center> A program that automatically moves/copies and sorts bulk files </h3>
+
+<p align="center">
+   <a href=https://github.com/Kreateer/automatic-file-sorter#project-goals->Project Goal(s)</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#how-to-contribute- %EF%B8%8F->How to Contribute?</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#compiling-into-executable-%EF%B8%8F->Compiling Into Executable</a>
+  </p>
+
+<p align="center">
+  <img src="">
+  </p>
 
 - This is a small program that automatically moves and sorts files from chosen source to destination. It uses [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI) to create a minimal GUI for the user.
 - Anyone is welcome to work on it and add whatever features they wish, as long as they adhere to the [Code of Conduct](https://github.com/Kreateer/automatic-file-sorter/blob/master/CODE_OF_CONDUCT.md) and the [Contributing Guidelines](https://github.com/Kreateer/automatic-file-sorter/blob/master/CONTRIBUTING.md).
@@ -37,6 +47,6 @@ Otherwise, if you are **new to GitHub** or have **never contributed** to GH proj
 - [Learn GitHub from Scratch](https://lab.github.com/githubtraining/introduction-to-github)
 
 
-## Building/Compiling Into a Runnable Executable ⚙️
+## Compiling Into Executable ⚙️
 
 - If you wish to build the source yourself and run the program from an **executable** instead of running the script everytime, you can use [PyInstaller](https://www.pyinstaller.org/) to compile the script into an **`.exe`** file.
