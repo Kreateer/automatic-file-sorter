@@ -43,7 +43,7 @@ Locate ``fmain.py`` and run the script through an IDE or through console:
 $ cd <clonelocation>/automatic-file-sorter/scripts
 
 # run 'fmain.py'
-$ sudo nano fmain.py
+$ sudo python3 fmain.py
 ```
 Once you run the program, just follow the GUI instructions.
 
