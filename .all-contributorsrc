@@ -1,0 +1,40 @@
+{
+  "projectName": "automatic-file-sorter",
+  "projectOwner": "Kreateer",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "Kreateer",
+      "name": "Matija Milaković",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19147258?s=460&u=d4ae6950dc95fe53b9ca083f74e3497527e36a4c&v=4",
+      "profile": "https://github.com/Kreateer",
+      "contributions": [
+        "ideas"
+        "projectManagement"
+        "question"
+        "review"
+        "talk"
+        "code"
+        "doc"
+      ]
+    },
+    {
+      "login": "pushp1997",
+      "name": "Pushp Vashisht",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19623154?s=400&u=7a94be1ab36f881e6b2c2322ccc9e5f63082a28f&v=4",
+      "profile": "https://github.com/pushp1997",
+      "contributions": [
+        "code"
+      ]
+    },
+  ],
+  "contributorsPerLine": 7
+}
