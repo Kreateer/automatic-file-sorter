@@ -3,7 +3,7 @@
 <h3 align=center> A program that automatically moves/copies and sorts bulk files </h3>
 
 <p align="center">
-   <a href=https://github.com/Kreateer/automatic-file-sorter#project-goals->Project Goal(s)</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#how-to-contribute- %EF%B8%8F->How to Contribute?</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#compiling-into-executable-%EF%B8%8F->Compiling Into Executable</a>
+   <a href=https://github.com/Kreateer/automatic-file-sorter#project-goals->Project Goal(s)</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#contributors>Contributors</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#how-to-contribute-%EF%B8%8F>How to Contribute?</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#compiling-into-executable-%EF%B8%8F>Compiling Into Executable</a>
   </p>
 
 <p align="center">
@@ -25,7 +25,33 @@ Specifically, this project looks to provide the user with:
 - The option to automatically move/copy and sort files from removable devices
 - The option to automatically sort directories or partitions as content is added, changed or removed
 
-## Contributors
+## Installation & Usage 💻
+
+First, clone this repository:
+```bash
+# Clone the repository
+$ git clone https://github.com/Kreateer/automatic-file-sorter
+```
+Install the dependencies:
+```bash
+# Install dependencies
+$ pip3 install -r requirements.txt
+```
+Locate ``fmain.py`` and run the script through an IDE or through console:
+```bash
+# cd to where 'fmain.py' is located
+$ cd <clonelocation>/automatic-file-sorter/scripts
+
+# run 'fmain.py'
+$ sudo nano fmain.py
+```
+Once you run the program, just follow the GUI instructions.
+
+## Contributors ❤️
+
+This is the 'hall of fame' for all the wonderful people who contributed to this project. It's a way to say a huge 'Thank You' to all contributors for helping out!
+
+Every contribution, no matter how small or large, is welcome and equally important! ❤️❤️
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
