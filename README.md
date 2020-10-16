@@ -3,6 +3,10 @@
 <h3 align=center> A program that automatically moves/copies and sorts bulk files </h3>
 
 <p align="center">
+   <img src="https://img.shields.io/github/hacktoberfest/2020/Kreateer/automatic-file-sorter"> <img src="https://img.shields.io/github/license/Kreateer/automatic-file-sorter"> <img src="https://img.shields.io/github/last-commit/Kreateer/automatic-file-sorter">
+   </p>
+
+<p align="center">
    <a href=https://github.com/Kreateer/automatic-file-sorter#project-goals->Project Goal(s)</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#contributors>Contributors</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#installation--usage->Installation & Usage</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#how-to-contribute-%EF%B8%8F>How to Contribute?</a> • <a href=https://github.com/Kreateer/automatic-file-sorter#compiling-into-executable-%EF%B8%8F>Compiling Into Executable</a>
   </p>
 
