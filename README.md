@@ -64,6 +64,7 @@ Every contribution, no matter how small or large, is welcome and equally importa
   <tr>
     <td align="center"><a href="https://github.com/Kreateer"><img src="https://avatars2.githubusercontent.com/u/19147258?v=4" width="100px;" alt=""/><br /><sub><b>Matija Milaković</b></sub></a><br /><a href="#projectManagement-Kreateer" title="Project Management">📆</a><a href="#ideas-Kreateer" title="Ideas, Planning, & Feedback">🤔</a><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Code">💻</a> <a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Documentation">📖</a></td>
      <td align="center"><a href="https://github.com/pushp1997"><img src="https://avatars2.githubusercontent.com/u/19623154?s=400&u=7a94be1ab36f881e6b2c2322ccc9e5f63082a28f&v=4" width="100px;" alt=""/><br /><sub><b>Pushp Vashisht</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=pushp1997" title="Code">💻</a>
+      <td align="center"><a href="https://github.com/arjunKay"><img src="https://avatars3.githubusercontent.com/u/21005432?s=460&u=44753ea260478cb4305a2bb9e11e2d8eac12550b&v=4" width="100px;" alt=""/><br /><sub><b>Arjun K</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=arjunKay" title="Code">💻</a>
   </tr>
 </table>
 
