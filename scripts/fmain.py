@@ -31,7 +31,12 @@ class fmGUI:
     def main_window(self):
         layout = [
             [sg.Text("Choose Operation to perform:")],
-            [sg.Combo(['Copy', 'Move'], default_value='Move' ,key='OPERATION')],
+            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION'),
+             sg.CBox(
+                 "Overwrite files",
+                 tooltip="Incoming files will replace files of the same names in the destination",
+                 key="OVERWRITE"
+             )],
             [sg.Frame(layout=[
                 [sg.Text("Sort by Type")],
                 [sg.Radio("Enabled", "RADIO1", default=False, key='SBYTE', enable_events=True),
@@ -55,11 +60,11 @@ class fmGUI:
                     if len(sort_list) == 1:
                         for value in sort_list:
                             if value == 'Sort by Type':
-                                run_fmover.filemover(values['OPERATION'], value)
+                                run_fmover.filemover(values['OPERATION'], value, values['OVERWRITE'])
                             else:
-                                run_fmover.filemover(values['OPERATION'], None)
+                                run_fmover.filemover(values['OPERATION'], None, values['OVERWRITE'])
                     else:
-                        run_fmover.filemover(values['OPERATION'], None)
+                        run_fmover.filemover(values['OPERATION'], None, values['OVERWRITE'])
 
                 else:
                     run_fmover = FileMover()
@@ -67,11 +72,11 @@ class fmGUI:
                     if len(sort_list) == 1:
                         for value in sort_list:
                             if value == 'Sort by Type':
-                                run_fmover.filemover(values['OPERATION'], value)
+                                run_fmover.filemover(values['OPERATION'], value, values['OVERWRITE'])
                             else:
-                                run_fmover.filemover(values['OPERATION'], None)
+                                run_fmover.filemover(values['OPERATION'], None, values['OVERWRITE'])
                     else:
-                        run_fmover.filemover(values['OPERATION'], None)
+                        run_fmover.filemover(values['OPERATION'], None, values['OVERWRITE'])
 
             elif event in 'SBYTE':
                 if values['SBYTE'] is True:
@@ -132,7 +137,7 @@ def append_file_type(value):
 
 class FileMover():
 
-    def filemover(self, operation, sortby):
+    def filemover(self, operation, sortby, overwrite):
         while True:
             num_files = len(os.listdir(get_path('src')))
             if num_files == 0:
@@ -145,7 +150,7 @@ class FileMover():
                     for value in file_type:
                         if file.endswith(value):
                             result = None
-                            if is_file_in_curr_dir is False:
+                            if is_file_in_curr_dir is False or overwrite:
                                 if operation == "Copy":
                                     result = shutil.copy(get_path('src') + "/" + file, get_path('dst') + "/" + file)
                                 else:
@@ -160,13 +165,14 @@ class FileMover():
                     get_subdir()
                     for value in file_type:
                         if file.endswith(value):
-                            if is_file_in_dst_dir is False and get_subdir() is False:
+
+                            if (is_file_in_dst_dir is False or overwrite) and get_subdir() is False:
                                 result = None
                                 if operation == "Copy":
                                     result = shutil.copy(get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
                                 else:
                                     result = shutil.move(get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
-                            elif is_file_in_dst_dir is False and get_subdir() is True:
+                            elif (is_file_in_dst_dir is False or overwrite) and get_subdir() is True:
                                 result = None
                                 if operation == 'Copy':
                                     result = shutil.copy(get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
