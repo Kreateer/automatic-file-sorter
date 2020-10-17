@@ -9,9 +9,9 @@ file_type = []
 mode_list = []
 sort_list = []
 
-image_list = ['.png', '.jpg', '.jpeg', '.gif']
-archive_list = ['.zip', '.rar', '.7z']
-textf_list = ['.txt', '.md', '.pdf', '.doc', '.docx']
+image_list = ['.png', '.jpg', '.jpeg', '.gif','.bmp','.tif','.psd']
+archive_list = ['.zip', '.rar', '.7z','.deb','.tar','.pkg','.tar.gz,'.rpm','.z']
+textf_list = ['.txt', '.md', '.pdf', '.doc', '.docx', '.xls', '.xlsx','.csv']
 
 
 def get_path(src_or_dst):
