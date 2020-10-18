@@ -2,9 +2,25 @@ import os
 import shutil
 import PySimpleGUI as sg
 
-source_folder = sg.popup_get_folder('Choose source location:', default_path='')
+source_folder = sg.popup_get_folder('Choose source location:', default_path="Source Directory Path...")
+if source_folder == "Source Directory Path...":
+    sg.PopupError("Directory path not specified!")
+    raise SystemExit()
+elif source_folder is None:
+    raise SystemExit()
+else:
+    pass
+
 destination_folder = sg.popup_get_folder(
-    'Choose destination folder:', default_path='')
+    'Choose destination folder:', default_path="Destination Directory Path...")
+
+if destination_folder == "Destination Directory Path...":
+    sg.PopupError("Directory path not specified!")
+    raise SystemExit()
+elif destination_folder is None:
+    raise SystemExit()
+else:
+    pass
 
 file_type = []
 mode_list = []
