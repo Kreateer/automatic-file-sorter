@@ -36,18 +36,57 @@ First, clone this repository:
 # Clone the repository
 $ git clone https://github.com/Kreateer/automatic-file-sorter
 ```
-Install the dependencies:
+
+### Linux
+
+Make sure you have Python 3.8+ installed on your system:
+```bash
+# Install Python 3.8
+$ sudo apt-get install python3.8
+```
+
+You may also need to install the `tkinter` module for Python:
+```bash
+# Install tkinter for Python 3
+$ sudo apt-get python3-tk
+```
+
+Next, install the dependencies:
 ```bash
 # Install dependencies
 $ pip3 install -r requirements.txt
 ```
-Locate ``fmain.py`` and run the script through an IDE or through console:
+
+Finally, locate ``fmain.py`` and run the script through an IDE or through console:
 ```bash
 # cd to where 'fmain.py' is located
 $ cd <clonelocation>/automatic-file-sorter/scripts
 
 # run 'fmain.py'
 $ sudo python3 fmain.py
+```
+Once you run the program, just follow the GUI instructions.
+
+### Windows
+
+Make sure you have Python 3.8+ installed.
+If you don't, you can download the Windows release from the [official Python site](https://www.python.org/downloads/windows/).
+
+Once Python is installed, you need to install the dependencies using pip.
+*IMPORTANT: If you're using an IDE like PyCharm, preferably you can use the IDE options to install packages in a virtual environment*
+
+In Command Prompt, type:
+```bash
+pip install -r requirements.txt
+```
+
+Then simply launch `fmain.py` through an IDE or through Command Prompt:
+```bash
+#cd to where 'fmain.py' is located
+cd <clonelocation>/automatic-file-sorter/scripts
+
+#run 'fmain.py'
+python fmain.py
 ```
 Once you run the program, just follow the GUI instructions.
 
