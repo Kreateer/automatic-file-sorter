@@ -1,8 +1,8 @@
 ---
-name: General Template
-about: General Issue template - NOT for Features
-title: "[Summarize the issue here.] [<ISSUE TYPE>]"
-labels: ''
+name: Hacktoberfest Bug
+about: For general issues during Hacktoberfest 2020
+title: "[Summarize issue here] [ISSUETYPE (BUG, DOC etc.)]"
+labels: hacktoberfest
 assignees: ''
 
 ---
