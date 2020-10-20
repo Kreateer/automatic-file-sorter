@@ -2,7 +2,17 @@ import os
 import shutil
 import PySimpleGUI as sg
 
+"""PySimpleGUI Popup Section
+
+These popups are activated immediately after the program starts and they ask
+the user to specify source and destination directories to work with.
+
+If the path is not specified or if it is empty, the program displays an error and exits.
+
+"""
+
 source_folder = sg.popup_get_folder('Choose source location:', default_path="Source Directory Path...")
+
 if source_folder == "Source Directory Path...":
     sg.PopupError("Directory path not specified!")
     raise SystemExit()
@@ -22,6 +32,27 @@ elif destination_folder is None:
 else:
     pass
 
+
+"""List Section
+
+General Lists
+
+'file_type' holds the current file type(s) being moved or copied
+'mode_list' holds the selected operation - Move or Copy
+'sort_list' holds the selected sorting option ('Sort by Type'...)
+
+'File Type' Lists
+
+These are actually self-explanatory, but descriptions have been added anyway for consistency's sake
+
+'image_list' holds image file types
+'archive_list' holds archive file types
+'textf_list' holds text file types
+'video_list' holds video file types
+'audio_list' holds audio file types
+
+"""
+
 file_type = []
 mode_list = []
 sort_list = []
@@ -38,16 +69,14 @@ audio_list = ['.m4a', '.mp3', '.wav', '.flac',
               '.wma', '.aac', '.aiff', '.aif', '.aifc']
 
 
-def get_path(src_or_dst):
-    folders = {source_folder: destination_folder}
-    source = folders.keys()
-    destination = folders.values()
-    if src_or_dst == 'src':
-        return str(*source)
-    elif src_or_dst == 'dst':
-        return str(*destination)
-    else:
-        raise SystemError("Parameter has to be 'src' or 'dst'")
+"""PySimpleGUI Main Window
+
+The 'fmGUI' class holds the main GUI window for the program.
+Any changes or additions to the GUI should go here.
+
+Refer to https://pysimplegui.readthedocs.io/en/latest/ for info. on PySimpleGUI elements
+
+"""
 
 
 class fmGUI:
@@ -135,6 +164,21 @@ class fmGUI:
         window.close()
 
 
+# This function pulls and returns source or destination path from dictionary
+
+def get_path(src_or_dst):
+    folders = {source_folder: destination_folder}
+    source = folders.keys()
+    destination = folders.values()
+    if src_or_dst == 'src':
+        return str(*source)
+    elif src_or_dst == 'dst':
+        return str(*destination)
+    else:
+        raise SystemError("Parameter has to be 'src' or 'dst'")
+
+# This function matches GUI file type options with appropriate values in file type lists
+
 def translate_filetype():
     for value in file_type:
         if value.startswith("Archive"):
@@ -171,15 +215,20 @@ def translate_filetype():
             pass
 
 
+# This function appends the selected mode (Move or Copy) to list
+
 def append_mode(mode):
     mode_list.append(mode)
     if mode in mode_list:
         return mode
 
+# This simply returns the currently selected mode (Move or Copy)
 
 def detect_mode():
     return mode_list[0]
 
+
+# This function clears the file_type list if not empty and appends new string value from the GUI options
 
 def append_file_type(value):
     if len(file_type) == 1:
@@ -189,6 +238,15 @@ def append_file_type(value):
     file_type.append(value)
     translate_filetype()
     return value
+
+
+"""Main Program
+
+The 'FileMover' class represents the main section of the program that is
+responsible for moving/copying and sorting files.
+
+"""
+
 
 
 class FileMover():
@@ -256,6 +314,8 @@ source = get_path('src')
 destination = get_path('dst')
 
 
+# This function checks if a sub directory already exists and returns False if it doesn't.
+
 def get_subdir():
     if os.path.exists(str(destination) + '/' + 'Images'):
         return True
@@ -275,6 +335,15 @@ def get_subdir():
     else:
         return False
 
+"""Sorting Options
+
+The 'SortCriteria' class holds file sorting options.
+
+'sortbytype' function sorts files by their file type and creates a sub directory for each file group
+within the destination directory.
+
+"""
+
 
 class SortCriteria():
 
@@ -283,7 +352,7 @@ class SortCriteria():
 
         # For image files
         for type in type_list:
-            if type in image_list:  # '.png' or '.jpg' or '.jpeg' or '.gif':
+            if type in image_list:
                 if os.path.exists(str(destination) + '/' + 'Images'):
                     return str(os.path.join(str(destination) + '/' + 'Images'))
                 else:
