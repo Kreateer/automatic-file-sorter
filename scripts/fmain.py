@@ -16,10 +16,11 @@ image_list = ['.png', '.jpg', '.jpeg', '.gif']
 archive_list = ['.zip', '.rar', '.7z']
 textf_list = ['.txt', '.md', '.pdf', '.doc', '.docx']
 
+
 def set_path(folder_type, path):
+    """Set the path of source/destination folders selected"""
     global source_folder
     global destination_folder
-    """Set the path of source/destination folders selected"""
     valid_keys = [SOURCE_FOLDER_KEY, DESTINATION_FOLDER_KEY]
     if folder_type == SOURCE_FOLDER_KEY:
         source_folder = path
@@ -30,6 +31,10 @@ def set_path(folder_type, path):
 
 
 def get_path(src_or_dst):
+    if src_or_dst == 'src' and source_folder is None:
+        return None
+    if src_or_dst == 'dst' and destination_folder is None:
+        return None
     folders = {source_folder: destination_folder}
     source = folders.keys()
     destination = folders.values()
@@ -95,7 +100,6 @@ class fmGUI:
                     else:
                         missing_fields = "destination folder"
                     sg.PopupOK("Oops! You didn't select the {}".format(missing_fields))
-                    continue
                 elif values['FILETYPE'] not in file_type:
                     append_file_type(values['FILETYPE'])
                     run_fmover = FileMover()
@@ -136,6 +140,7 @@ class fmGUI:
                 pass
 
         window.close()
+
 
 def translate_filetype():
     for value in file_type:
