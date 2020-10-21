@@ -2,8 +2,11 @@ import os
 import shutil
 import PySimpleGUI as sg
 
-source_folder = sg.popup_get_folder('Choose source location:', default_path='')
-destination_folder = sg.popup_get_folder('Choose destination folder:', default_path='')
+SOURCE_FOLDER_KEY = 'SRC'
+DESTINATION_FOLDER_KEY = 'DST'
+
+source_folder = None
+destination_folder = None
 
 file_type = []
 mode_list = []
@@ -12,6 +15,18 @@ sort_list = []
 image_list = ['.png', '.jpg', '.jpeg', '.gif']
 archive_list = ['.zip', '.rar', '.7z']
 textf_list = ['.txt', '.md', '.pdf', '.doc', '.docx']
+
+def set_path(folder_type, path):
+    global source_folder
+    global destination_folder
+    """Set the path of source/destination folders selected"""
+    valid_keys = [SOURCE_FOLDER_KEY, DESTINATION_FOLDER_KEY]
+    if folder_type == SOURCE_FOLDER_KEY:
+        source_folder = path
+    elif folder_type == DESTINATION_FOLDER_KEY:
+        destination_folder = path
+    else:
+        raise SystemError("Parameter has to be one of {}".format(valid_keys))
 
 
 def get_path(src_or_dst):
@@ -29,9 +44,25 @@ def get_path(src_or_dst):
 class fmGUI:
 
     def main_window(self):
+        folder_select_layout = [
+            [
+                sg.Text('Select source folder', size=(20,1)),
+                sg.In(key='SRC', enable_events=True),
+                sg.FolderBrowse()
+            ],
+            [
+                sg.Text('Select destination folder', size=(20,1)),
+                sg.In(key='DST', enable_events=True),
+                sg.FolderBrowse()
+            ],
+        ]
         layout = [
+            [sg.Frame(
+                'Choose source and destination folders',
+                layout=folder_select_layout,
+            )],
             [sg.Text("Choose Operation to perform:")],
-            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION'),
+            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION', size=(10,1)),
              sg.CBox(
                  "Overwrite files",
                  tooltip="Incoming files will replace files of the same names in the destination",
@@ -52,8 +83,20 @@ class fmGUI:
             event, values = window.read()
             if event in (sg.WIN_CLOSED, 'Cancel'):
                 break
+            elif event in ['SRC', 'DST']:
+                set_path(event, values[event])
             elif event in 'Ok':
-                if values['FILETYPE'] not in file_type:
+                if not get_path('src') or not get_path('dst'):
+                    missing_fields = None
+                    if not get_path('src') and not get_path('dst'):
+                        missing_fields = "source and destination folders"
+                    elif not get_path('src'):
+                        missing_fields = "source folder"
+                    else:
+                        missing_fields = "destination folder"
+                    sg.PopupOK("Oops! You didn't select the {}".format(missing_fields))
+                    continue
+                elif values['FILETYPE'] not in file_type:
                     append_file_type(values['FILETYPE'])
                     run_fmover = FileMover()
                     append_mode(values['OPERATION'])
