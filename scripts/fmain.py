@@ -31,6 +31,8 @@ def set_path(folder_type, path):
 
 
 def get_path(src_or_dst):
+    global source_folder
+    global destination_folder
     if src_or_dst == 'src' and source_folder is None:
         return None
     if src_or_dst == 'dst' and destination_folder is None:
@@ -67,7 +69,7 @@ class fmGUI:
                 layout=folder_select_layout,
             )],
             [sg.Text("Choose Operation to perform:")],
-            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION', size=(10,1)),
+            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION', size=(10, 1)),
              sg.CBox(
                  "Overwrite files",
                  tooltip="Incoming files will replace files of the same names in the destination",
@@ -234,22 +236,20 @@ class FileMover():
 
 fmover = FileMover()
 
-source = get_path('src')
-destination = get_path('dst')
-
 
 def get_subdir():
-    if os.path.exists(str(destination) + '/' + 'Images'):
+    if os.path.exists(str(get_path('dst')) + '/' + 'Images'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Archives'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Archives'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Text Files'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Text Files'):
         return True
 
     else:
         return False
+
 
 
 
@@ -261,27 +261,27 @@ class SortCriteria():
         # For image files
         for type in type_list:
             if type in image_list: #'.png' or '.jpg' or '.jpeg' or '.gif':
-                if os.path.exists(str(destination) + '/' + 'Images'):
-                    return str(os.path.join(str(destination) + '/' + 'Images'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Images'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Images'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Images')
-                    return str(os.path.join(str(destination) + '/' + 'Images'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Images')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Images'))
 
         # For archive files
             elif type in archive_list:
-                if os.path.exists(str(destination) + '/' + 'Archives'):
-                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Archives'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Archives'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Archives')
-                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Archives')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Archives'))
 
         # For text files
             elif type in textf_list:
-                    if os.path.exists(str(destination) + '/' + 'Text Files'):
-                        return str(os.path.join(str(destination) + '/' + 'Text Files'))
+                    if os.path.exists(str(get_path('dst')) + '/' + 'Text Files'):
+                        return str(os.path.join(str(get_path('dst')) + '/' + 'Text Files'))
                     else:
-                        os.mkdir(str(destination) + '/' + 'Text Files')
-                        return str(os.path.join(str(destination) + '/' + 'Text Files'))
+                        os.mkdir(str(get_path('dst')) + '/' + 'Text Files')
+                        return str(os.path.join(str(get_path('dst')) + '/' + 'Text Files'))
 
             else:
                 sg.PopupError("File type not found!")
