@@ -2,35 +2,14 @@ import os
 import shutil
 import PySimpleGUI as sg
 
-"""PySimpleGUI Popup Section
+SOURCE_FOLDER_KEY = 'SRC'
+DESTINATION_FOLDER_KEY = 'DST'
 
-These popups are activated immediately after the program starts and they ask
-the user to specify source and destination directories to work with.
 
-If the path is not specified or if it is empty, the program displays an error and exits.
+source_folder = None
 
-"""
 
-source_folder = sg.popup_get_folder('Choose source location:', default_path="Source Directory Path...")
-
-if source_folder == "Source Directory Path...":
-    sg.PopupError("Directory path not specified!")
-    raise SystemExit()
-elif source_folder is None:
-    raise SystemExit()
-else:
-    pass
-
-destination_folder = sg.popup_get_folder(
-    'Choose destination folder:', default_path="Destination Directory Path...")
-
-if destination_folder == "Destination Directory Path...":
-    sg.PopupError("Directory path not specified!")
-    raise SystemExit()
-elif destination_folder is None:
-    raise SystemExit()
-else:
-    pass
+destination_folder = None
 
 
 """List Section
@@ -82,9 +61,25 @@ Refer to https://pysimplegui.readthedocs.io/en/latest/ for info. on PySimpleGUI 
 class fmGUI:
 
     def main_window(self):
+        folder_select_layout = [
+            [
+                sg.Text('Select source folder', size=(20,1)),
+                sg.In(key='SRC', enable_events=True),
+                sg.FolderBrowse()
+            ],
+            [
+                sg.Text('Select destination folder', size=(20,1)),
+                sg.In(key='DST', enable_events=True),
+                sg.FolderBrowse()
+            ],
+        ]
         layout = [
+            [sg.Frame(
+                'Choose source and destination folders',
+                layout=folder_select_layout,
+            )],
             [sg.Text("Choose Operation to perform:")],
-            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION'),
+            [sg.Combo(['Copy', 'Move'], default_value='Move', key='OPERATION', size=(10, 1)),
              sg.CBox(
                  "Overwrite files",
                  tooltip="Incoming files will replace files of the same names in the destination",
@@ -115,8 +110,19 @@ class fmGUI:
             event, values = window.read()
             if event in (sg.WIN_CLOSED, 'Cancel'):
                 break
+            elif event in ['SRC', 'DST']:
+                set_path(event, values[event])
             elif event in 'Ok':
-                if values['FILETYPE'] not in file_type:
+                if not get_path('src') or not get_path('dst'):
+                    missing_fields = None
+                    if not get_path('src') and not get_path('dst'):
+                        missing_fields = "source and destination folders"
+                    elif not get_path('src'):
+                        missing_fields = "source folder"
+                    else:
+                        missing_fields = "destination folder"
+                    sg.PopupOK("Oops! You didn't select the {}".format(missing_fields))
+                elif values['FILETYPE'] not in file_type:
                     append_file_type(values['FILETYPE'])
                     run_fmover = FileMover()
                     append_mode(values['OPERATION'])
@@ -167,6 +173,12 @@ class fmGUI:
 # This function pulls and returns source or destination path from dictionary
 
 def get_path(src_or_dst):
+    global source_folder
+    global destination_folder
+    if src_or_dst == 'src' and source_folder is None:
+        return None
+    if src_or_dst == 'dst' and destination_folder is None:
+        return None
     folders = {source_folder: destination_folder}
     source = folders.keys()
     destination = folders.values()
@@ -176,6 +188,20 @@ def get_path(src_or_dst):
         return str(*destination)
     else:
         raise SystemError("Parameter has to be 'src' or 'dst'")
+
+
+def set_path(folder_type, path):
+    """Set the path of source/destination folders selected"""
+    global source_folder
+    global destination_folder
+    valid_keys = [SOURCE_FOLDER_KEY, DESTINATION_FOLDER_KEY]
+    if folder_type == SOURCE_FOLDER_KEY:
+        source_folder = path
+    elif folder_type == DESTINATION_FOLDER_KEY:
+        destination_folder = path
+    else:
+        raise SystemError("Parameter has to be one of {}".format(valid_keys))
+
 
 # This function matches GUI file type options with appropriate values in file type lists
 
@@ -310,30 +336,28 @@ class FileMover():
 
 fmover = FileMover()
 
-source = get_path('src')
-destination = get_path('dst')
-
 
 # This function checks if a sub directory already exists and returns False if it doesn't.
 
 def get_subdir():
-    if os.path.exists(str(destination) + '/' + 'Images'):
+    if os.path.exists(str(get_path('dst')) + '/' + 'Images'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Archives'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Archives'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Text Files'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Text Files'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Videos'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Videos'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Audio'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Audio'):
         return True
 
     else:
         return False
+
 
 """Sorting Options
 
@@ -353,43 +377,43 @@ class SortCriteria():
         # For image files
         for type in type_list:
             if type in image_list:
-                if os.path.exists(str(destination) + '/' + 'Images'):
-                    return str(os.path.join(str(destination) + '/' + 'Images'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Images'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Images'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Images')
-                    return str(os.path.join(str(destination) + '/' + 'Images'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Images')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Images'))
 
         # For archive files
             elif type in archive_list:
-                if os.path.exists(str(destination) + '/' + 'Archives'):
-                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Archives'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Archives'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Archives')
-                    return str(os.path.join(str(destination) + '/' + 'Archives'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Archives')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Archives'))
 
         # For text files
             elif type in textf_list:
-                if os.path.exists(str(destination) + '/' + 'Text Files'):
-                    return str(os.path.join(str(destination) + '/' + 'Text Files'))
-                else:
-                    os.mkdir(str(destination) + '/' + 'Text Files')
-                    return str(os.path.join(str(destination) + '/' + 'Text Files'))
+                    if os.path.exists(str(get_path('dst')) + '/' + 'Text Files'):
+                        return str(os.path.join(str(get_path('dst')) + '/' + 'Text Files'))
+                    else:
+                        os.mkdir(str(get_path('dst')) + '/' + 'Text Files')
+                        return str(os.path.join(str(get_path('dst')) + '/' + 'Text Files'))
 
         # For video files
             elif type in video_list:
-                if os.path.exists(str(destination) + '/' + 'Videos'):
-                    return str(os.path.join(str(destination) + '/' + 'Videos'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Videos'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Videos'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Videos')
-                    return str(os.path.join(str(destination) + '/' + 'Videos'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Videos')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Videos'))
 
         # For audio files
             elif type in audio_list:
-                if os.path.exists(str(destination) + '/' + 'Audio'):
-                    return str(os.path.join(str(destination) + '/' + 'Audio'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Audio'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Audio'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Audio')
-                    return str(os.path.join(str(destination) + '/' + 'Audio'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Audio')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Audio'))
 
             else:
                 sg.PopupError("File type not found!")
