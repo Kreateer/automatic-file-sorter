@@ -349,14 +349,15 @@ def get_subdir():
     elif os.path.exists(str(get_path('dst')) + '/' + 'Text Files'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Videos'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Videos'):
         return True
 
-    elif os.path.exists(str(destination) + '/' + 'Audio'):
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Audio'):
         return True
 
     else:
         return False
+
 
 """Sorting Options
 
@@ -366,7 +367,6 @@ The 'SortCriteria' class holds file sorting options.
 within the destination directory.
 
 """
-
 
 
 class SortCriteria():
@@ -401,19 +401,19 @@ class SortCriteria():
 
         # For video files
             elif type in video_list:
-                if os.path.exists(str(destination) + '/' + 'Videos'):
-                    return str(os.path.join(str(destination) + '/' + 'Videos'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Videos'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Videos'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Videos')
-                    return str(os.path.join(str(destination) + '/' + 'Videos'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Videos')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Videos'))
 
         # For audio files
             elif type in audio_list:
-                if os.path.exists(str(destination) + '/' + 'Audio'):
-                    return str(os.path.join(str(destination) + '/' + 'Audio'))
+                if os.path.exists(str(get_path('dst')) + '/' + 'Audio'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Audio'))
                 else:
-                    os.mkdir(str(destination) + '/' + 'Audio')
-                    return str(os.path.join(str(destination) + '/' + 'Audio'))
+                    os.mkdir(str(get_path('dst')) + '/' + 'Audio')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Audio'))
 
             else:
                 sg.PopupError("File type not found!")
