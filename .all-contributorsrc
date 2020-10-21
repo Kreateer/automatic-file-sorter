@@ -44,6 +44,24 @@
         "code"
       ]
     },
+    {
+      "login": "saptarsi96",
+      "name": "Saptarsi Saha",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/29809001?s=400&u=877444ac545a2e7cdf3aac3189e13181761a0669&v=4",
+      "profile": "https://github.com/saptarsi96",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "EmeraldEntities",
+      "name": "Joseph Wang",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/44278515?s=400&u=91541d9d3b3fb613495c52239c8ddc474f5c0b19&v=4",
+      "profile": "https://github.com/EmeraldEntities",
+      "contributions": [
+        "code"
+      ]
+    },
   ],
   "contributorsPerLine": 7
 }

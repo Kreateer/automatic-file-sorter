@@ -36,18 +36,58 @@ First, clone this repository:
 # Clone the repository
 $ git clone https://github.com/Kreateer/automatic-file-sorter
 ```
-Install the dependencies:
+
+### Linux
+
+Make sure you have Python 3.8+ installed on your system:
+```bash
+# Install Python 3.8
+$ sudo apt-get install python3.8
+```
+
+You may also need to install the `tkinter` module for Python:
+```bash
+# Install tkinter for Python 3
+$ sudo apt-get python3-tk
+```
+
+Next, install the dependencies:
 ```bash
 # Install dependencies
 $ pip3 install -r requirements.txt
 ```
-Locate ``fmain.py`` and run the script through an IDE or through console:
+
+Finally, locate ``fmain.py`` and run the script through an IDE or through console:
 ```bash
 # cd to where 'fmain.py' is located
 $ cd <clonelocation>/automatic-file-sorter/scripts
 
 # run 'fmain.py'
 $ sudo python3 fmain.py
+```
+Once you run the program, just follow the GUI instructions.
+
+### Windows
+
+Make sure you have Python 3.8+ installed.
+If you don't, you can download the Windows release from the [official Python site](https://www.python.org/downloads/windows/).
+
+Once Python is installed, you need to install the dependencies using pip.
+
+*IMPORTANT: If you're using an IDE like PyCharm, preferably you can use the IDE options to install packages in a virtual environment*
+
+In Command Prompt, type:
+```bash
+pip install -r requirements.txt
+```
+
+Then simply launch `fmain.py` through an IDE or through Command Prompt:
+```bash
+#cd to where 'fmain.py' is located
+cd <clonelocation>/automatic-file-sorter/scripts
+
+#run 'fmain.py'
+python fmain.py
 ```
 Once you run the program, just follow the GUI instructions.
 
@@ -63,8 +103,11 @@ Every contribution, no matter how small or large, is welcome and equally importa
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Kreateer"><img src="https://avatars2.githubusercontent.com/u/19147258?v=4" width="100px;" alt=""/><br /><sub><b>Matija Milaković</b></sub></a><br /><a href="#projectManagement-Kreateer" title="Project Management">📆</a><a href="#ideas-Kreateer" title="Ideas, Planning, & Feedback">🤔</a><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Code">💻</a> <a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=Kreateer" title="Documentation">📖</a></td>
-     <td align="center"><a href="https://github.com/pushp1997"><img src="https://avatars2.githubusercontent.com/u/19623154?s=400&u=7a94be1ab36f881e6b2c2322ccc9e5f63082a28f&v=4" width="100px;" alt=""/><br /><sub><b>Pushp Vashisht</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=pushp1997" title="Code">💻</a>
-      <td align="center"><a href="https://github.com/arjunKay"><img src="https://avatars3.githubusercontent.com/u/21005432?s=460&u=44753ea260478cb4305a2bb9e11e2d8eac12550b&v=4" width="100px;" alt=""/><br /><sub><b>Arjun K</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=arjunKay" title="Code">💻</a>
+    <td align="center"><a href="https://github.com/pushp1997"><img src="https://avatars2.githubusercontent.com/u/19623154?s=400&u=7a94be1ab36f881e6b2c2322ccc9e5f63082a28f&v=4" width="100px;" alt=""/><br /><sub><b>Pushp Vashisht</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=pushp1997" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/arjunKay"><img src="https://avatars3.githubusercontent.com/u/21005432?s=460&u=44753ea260478cb4305a2bb9e11e2d8eac12550b&v=4" width="100px;" alt=""/><br /><sub><b>Arjun K</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=arjunKay" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/saptarsi96"><img src="https://avatars1.githubusercontent.com/u/29809001?s=400&u=877444ac545a2e7cdf3aac3189e13181761a0669&v=4" width="100px;" alt=""/><br /><sub><b>Saptarsi Saha</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=saptarsi96" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/EmeraldEntities"><img src="https://avatars0.githubusercontent.com/u/44278515?s=400&u=91541d9d3b3fb613495c52239c8ddc474f5c0b19&v=4" width="100px;" alt=""/><br /><sub><b>Joseph Wang
+</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=EmeraldEntities" title="Code">💻</a></td>
   </tr>
 </table>
 
