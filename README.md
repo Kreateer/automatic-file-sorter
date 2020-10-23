@@ -108,6 +108,8 @@ Every contribution, no matter how small or large, is welcome and equally importa
     <td align="center"><a href="https://github.com/saptarsi96"><img src="https://avatars1.githubusercontent.com/u/29809001?s=400&u=877444ac545a2e7cdf3aac3189e13181761a0669&v=4" width="100px;" alt=""/><br /><sub><b>Saptarsi Saha</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=saptarsi96" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/EmeraldEntities"><img src="https://avatars0.githubusercontent.com/u/44278515?s=400&u=91541d9d3b3fb613495c52239c8ddc474f5c0b19&v=4" width="100px;" alt=""/><br /><sub><b>Joseph Wang
 </b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=EmeraldEntities" title="Code">💻</a></td>
+     <td align="center"><a href="https://github.com/polynoman"><img src="https://avatars1.githubusercontent.com/u/25401827?s=400&v=4" width="100px;" alt=""/><br /><sub><b>polynoman
+</b></sub></a><br /><a href="https://github.com/Kreateer/automatic-file-sorter/commits?author=polynoman" title="Code">💻</a></td>
   </tr>
 </table>
 
