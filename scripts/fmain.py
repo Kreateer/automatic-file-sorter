@@ -29,6 +29,7 @@ These are actually self-explanatory, but descriptions have been added anyway for
 'textf_list' holds text file types
 'video_list' holds video file types
 'audio_list' holds audio file types
+'code_list' holds code file types
 
 """
 
@@ -46,6 +47,10 @@ video_list = ['.mp4', '.m4v', '.mov', '.wmv',
               '.flv', '.avi', '.mpeg', '.mpg', '.mpe']
 audio_list = ['.m4a', '.mp3', '.wav', '.flac',
               '.wma', '.aac', '.aiff', '.aif', '.aifc']
+code_list = ['.c', '.cgi', '.pl', '.class',
+              '.cpp', '.cs', '.h', '.hpp',
+              '.java', '.php', '.py', '.pyc',
+               '.sh', '.swift', '.vb']
 
 
 """PySimpleGUI Main Window
@@ -97,7 +102,8 @@ class fmGUI:
                     "Image ('.png', '.jpg'...)",
                     "Text ('.txt', '.docx'...)",
                     "Video ('.mp4', '.mov'...)",
-                    "Audio ('.mp3', '.wav'...)"
+                    "Audio ('.mp3', '.wav'...)",
+                    "Code ('.cpp', '.py'...)"
                 ],
                 key='FILETYPE', enable_events=True
             )],
@@ -237,6 +243,12 @@ def translate_filetype():
                 file_type.append(aud)
             return str(file_type)
 
+        elif value.startswith("Code"):
+            file_type.clear()
+            for cod in code_list:
+                file_type.append(cod)
+            return str(file_type)
+
         else:
             pass
 
@@ -355,6 +367,9 @@ def get_subdir():
     elif os.path.exists(str(get_path('dst')) + '/' + 'Audio'):
         return True
 
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Code'):
+        return True
+
     else:
         return False
 
@@ -414,6 +429,14 @@ class SortCriteria():
                 else:
                     os.mkdir(str(get_path('dst')) + '/' + 'Audio')
                     return str(os.path.join(str(get_path('dst')) + '/' + 'Audio'))
+
+        # For code files
+            elif type in code_list:
+                if os.path.exists(str(get_path('dst')) + '/' + 'Code'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Code'))
+                else:
+                    os.mkdir(str(get_path('dst')) + '/' + 'Code')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Code'))
 
             else:
                 sg.PopupError("File type not found!")
