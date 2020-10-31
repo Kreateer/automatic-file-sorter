@@ -2,8 +2,6 @@ import os
 import shutil
 import PySimpleGUI as sg
 
-sg.theme( 'Reddit' )
-
 SOURCE_FOLDER_KEY = 'SRC'
 DESTINATION_FOLDER_KEY = 'DST'
 
@@ -38,7 +36,6 @@ These are actually self-explanatory, but descriptions have been added anyway for
 file_type = []
 mode_list = []
 sort_list = []
-dir_length = []
 
 image_list = ['.png', '.jpg', '.jpeg', '.jfif',
               '.heic', '.gif', '.bmp', '.tif', '.psd']
@@ -69,7 +66,6 @@ Refer to https://pysimplegui.readthedocs.io/en/latest/ for info. on PySimpleGUI 
 class fmGUI:
 
     def main_window(self):
-
         folder_select_layout = [
             [
                 sg.Text('Select source folder', size=(20,1)),
@@ -120,10 +116,8 @@ class fmGUI:
             event, values = window.read()
             if event in (sg.WIN_CLOSED, 'Cancel'):
                 break
-
             elif event in ['SRC', 'DST']:
                 set_path(event, values[event])
-
             elif event in 'Ok':
                 if not get_path('src') or not get_path('dst'):
                     missing_fields = None
@@ -134,7 +128,6 @@ class fmGUI:
                     else:
                         missing_fields = "destination folder"
                     sg.PopupOK("Oops! You didn't select the {}".format(missing_fields))
-
                 elif values['FILETYPE'] not in file_type:
                     append_file_type(values['FILETYPE'])
                     run_fmover = FileMover()
@@ -181,50 +174,6 @@ class fmGUI:
                 pass
 
         window.close()
-
-
-    def prog_bar(self, get_length, increase=True, maximum=False):
-
-        get_length = len(get_length)
-
-        bar_layout = [
-            [sg.Text("Processing ", key='shite', enable_events=True)],
-            [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='pbar')],
-            [sg.Cancel()]
-        ]
-
-        bar_window = sg.Window('Progress bar', bar_layout)
-        progress_bar = bar_window['pbar']
-
-        if increase == True:
-            while get_length != 0:
-                event, values = bar_window.read(timeout=10)
-                if event == 'Cancel' or event == sg.WIN_CLOSED:
-                    break
-
-                else:
-                    for i in range(get_length):
-                        if maximum is True:
-                            maximum = 1000
-                            progress_bar.UpdateBar(maximum)
-                            bar_window.close()
-                        else:
-                            progress_bar.UpdateBar(i + 1)
-                            get_length -= 1
-                            for file in os.listdir(get_path('src')):
-                                for value in file_type:
-                                    if file.endswith(value):
-                                        values.update({'shite': f"Processing {get_path('src')}" + "/" + file})
-                                        #values["shite"].update(f"{get_path('src')}" + "/" + file)
-                                        #print(str(values))
-
-            else:
-                progress_bar.UpdateBar(1000)
-                bar_window.close()
-        else:
-            bar_window.close()
-
-
 
 
 # This function pulls and returns source or destination path from dictionary
@@ -329,20 +278,6 @@ def append_file_type(value):
     return value
 
 
-def get_dir_length(src_or_dst):
-    if src_or_dst == 'src':
-        for file in os.listdir(get_path('src')):
-            dir_length.append(file)
-        return len(dir_length)
-
-    elif src_or_dst == 'dst':
-        for file in os.listdir(get_path('dst')):
-            dir_length.append(file)
-        return len(dir_length)
-    else:
-        pass
-
-
 """Main Program
 
 The 'FileMover' class represents the main section of the program that is
@@ -355,9 +290,6 @@ responsible for moving/copying and sorting files.
 class FileMover():
 
     def filemover(self, operation, sortby, overwrite):
-
-        gui = fmGUI()
-
         while True:
             num_files = len(os.listdir(get_path('src')))
             if num_files == 0:
@@ -365,7 +297,6 @@ class FileMover():
                 raise SystemExit()
             elif sortby is None:
                 for file in os.listdir(get_path('src')):
-                    get_dir_length('src')
                     #file_ending = get_file_type()
                     is_file_in_curr_dir = os.path.isfile(
                         get_path('dst') + "/" + file)
@@ -376,25 +307,15 @@ class FileMover():
                                 if operation == "Copy":
                                     result = shutil.copy(
                                         get_path('src') + "/" + file, get_path('dst') + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
-
                                 else:
                                     result = shutil.move(
                                         get_path('src') + "/" + file, get_path('dst') + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
                         # if file not in current_dir:
                         #    file_type.pop()
 
             elif sortby == 'Sort by Type':
                 for file in os.listdir(get_path('src')):
                     sc = SortCriteria()
-                    get_dir_length('src')
                     is_file_in_dst_dir = os.path.isfile(
                         get_path('dst') + "/" + file)
                     get_subdir()
@@ -407,34 +328,18 @@ class FileMover():
                                 if operation == "Copy":
                                     result = shutil.copy(
                                         get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
                                 else:
                                     result = shutil.move(
                                         get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
 
                             elif (is_file_in_dst_dir is False or overwrite) and get_subdir() is True:
                                 result = None
                                 if operation == 'Copy':
                                     result = shutil.copy(
                                         get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
                                 else:
                                     result = shutil.move(
                                         get_path('src') + "/" + file, sc.sortbytype(value) + "/" + file)
-                                    if dir_length != 0:
-                                        gui.prog_bar(dir_length)
-                                    else:
-                                        gui.prog_bar(dir_length, maximum=True)
                             else:
                                 pass
 
