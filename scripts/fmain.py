@@ -30,6 +30,7 @@ These are actually self-explanatory, but descriptions have been added anyway for
 'video_list' holds video file types
 'audio_list' holds audio file types
 'code_list' holds code file types
+'present_list' holds presentation file types
 
 """
 
@@ -40,9 +41,11 @@ sort_list = []
 image_list = ['.png', '.jpg', '.jpeg', '.jfif',
               '.heic', '.gif', '.bmp', '.tif', '.psd']
 archive_list = ['.zip', '.rar', '.7z', '.deb',
-                '.tar', '.pkg', '.tar.gz', '.gz', '.rpm', '.z']
+                '.tar', '.pkg', '.tar.gz', '.gz',
+                '.rpm', '.z', 'tar.xz', 'xz']
 textf_list = ['.txt', '.md', '.pdf', '.doc',
-              '.docx', '.xls', '.xlsx', '.csv', '.rtf', '.tex']
+              '.docx', '.xls', '.xlsx', '.csv',
+              '.rtf', '.tex', '.json', '.xml']
 video_list = ['.mp4', '.m4v', '.mov', '.wmv',
               '.flv', '.avi', '.mpeg', '.mpg', '.mpe']
 audio_list = ['.m4a', '.mp3', '.wav', '.flac',
@@ -51,6 +54,8 @@ code_list = ['.c', '.cgi', '.pl', '.class',
               '.cpp', '.cs', '.h', '.hpp',
               '.java', '.php', '.py', '.pyc',
                '.sh', '.swift', '.vb']
+present_list = ['pptx', 'pptm', 'ppt', 'potx',
+                'pot', 'potm', 'ppsx', 'pps']
 
 
 """PySimpleGUI Main Window
@@ -103,7 +108,8 @@ class fmGUI:
                     "Text ('.txt', '.docx'...)",
                     "Video ('.mp4', '.mov'...)",
                     "Audio ('.mp3', '.wav'...)",
-                    "Code ('.cpp', '.py'...)"
+                    "Code ('.cpp', '.py'...)",
+                    "Presentation ('.pptx', '.pptm'...)"
                 ],
                 key='FILETYPE', enable_events=True
             )],
@@ -249,6 +255,11 @@ def translate_filetype():
                 file_type.append(cod)
             return str(file_type)
 
+        elif value.startswith("Presentation"):
+            file_type.clear()
+            for prs in present_list:
+                file_type.append(prs)
+            return str(file_type)
         else:
             pass
 
@@ -370,6 +381,9 @@ def get_subdir():
     elif os.path.exists(str(get_path('dst')) + '/' + 'Code'):
         return True
 
+    elif os.path.exists(str(get_path('dst')) + '/' + 'Presentations'):
+        return True
+    
     else:
         return False
 
@@ -437,6 +451,14 @@ class SortCriteria():
                 else:
                     os.mkdir(str(get_path('dst')) + '/' + 'Code')
                     return str(os.path.join(str(get_path('dst')) + '/' + 'Code'))
+                
+        # For presentation files
+            elif type in present_list:
+                if os.path.exists(str(get_path('dst')) + '/' + 'Presentations'):
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Presentations'))
+                else:
+                    os.mkdir(str(get_path('dst')) + '/' + 'Presentations')
+                    return str(os.path.join(str(get_path('dst')) + '/' + 'Presentations'))
 
             else:
                 sg.PopupError("File type not found!")
